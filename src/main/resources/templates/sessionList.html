@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<title>Insert title here</title>
+</head>
+<body>
+当前在线人数：<span th:text="${sessionSize}"></span>人                 <br/>
+<table class="table">
+    <thead>
+        <tr>
+            <th style="width: 150px;">会话ID</th>
+            
+            <th>主机地址</th>
+           
+            <th>操作</th>
+        </tr>
+    </thead>
+    <tbody>
+    	<tr th:each="session : ${sessions}" class="text-info">
+                    <td th:text="${session.id}"></td>
+                    <td th:text="${session.host}"></td>
+                    <td>
+                    	
+                    	<a th:href="@{/sessions(sessionId=${session.id})}" >强制退出1</a>
+                    	<a th:href="@{${session.id}}" >强制退出2</a>
+                        <a th:href="@{sessions/sessionId=${session.id}}">强制退出${session.id}</a>
+                </td>
+                </tr>
+        <!-- <c:forEach items="${sessions}" var="session">
+            <tr>
+                <td>${session.id}</td>
+                <td>${zhangfn:principal(session)}</td>
+                <td>${session.host}</td>
+                <td><fmt:formatDate value="${session.lastAccessTime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+                <td>${zhangfn:isForceLogout(session) ? '是' : '否'}</td>
+                <td>
+                    <c:if test="${not zhangfn:isForceLogout(session)}">
+                        <a href="${pageContext.request.contextPath}/sessions/${session.id}/forceLogout">强制退出</a>
+                    </c:if>
+                </td>
+            </tr>
+        </c:forEach> -->
+    </tbody>
+</table>
+</body>
+</html>

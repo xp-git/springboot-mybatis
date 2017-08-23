@@ -1,0 +1,18 @@
+spring boot + mybatis + shiro 的整合。
+权限的配置在shiroConfiguration.java;
+同一个url配置多个权限，没有成功。
+强制一个一个用户下线http://jinnianshilongnian.iteye.com/blog/2047643
+强制一个用户下线已经实现，主要是问题是：
+后台的代码：配置自定义的sessionDao,需要继承AbstractSessionDAO，并且在shiroconfig中配置自定
+义的sessionDao,交给SessionManger来管理，然后把SessionManger交给默认的安全事务管理器来管理，
+defaultWebSecurityManager，同时还需要编写强制用户退出的过滤器，也需要在shiroConfig中来配置过滤器
+的管理，以及拦截请求的配置。
+页面的问题：在使用thymeleaf这个模板引擎的时候，在通过el表达式获取model中参数的时候，必须使用thymeleaf
+的语法格式，否则el表达式获取参数无效，请参考thymeleaf的语法格式。
+当强制一个用户下线以后，在线的人数并没有立即更新，而是要等这个用户，操作其他的页面，返回到登录页面，发现自己被
+强制下线以后，才会减少在线人数。
+<!-- SessionDAO -->
+<bean id="sessionDAO" class="org.apache.shiro.session.mgt.eis.EnterpriseCacheSessionDAO">
+    <property name="activeSessionsCacheName" value="shiro-activeSessionCache"/>
+    <property name="sessionIdGenerator" ref="sessionIdGenerator"/>
+</bean>
